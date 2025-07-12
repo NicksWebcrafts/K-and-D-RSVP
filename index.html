@@ -10,28 +10,25 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      background: #fff;
+      background: #fafafa;
       font-family: 'Georgia', serif;
       color: #333;
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
     }
-    body {
-      background-color: #fafafa;
-    }
 
-    /* Floating emojis container */
+    /* Floating emojis base style */
     .floating-emoji {
       position: absolute;
       font-size: 2.5rem;
       opacity: 0.15;
       pointer-events: none;
       user-select: none;
-      will-change: transform;
-      transition: transform 1s linear;
-      z-index: 0;
       color: #bfae7f;
+      will-change: transform;
+      z-index: 0;
+      transition: transform 0.3s ease;
     }
 
     /* Header styling */
@@ -185,15 +182,15 @@
   </style>
 </head>
 <body>
-  <!-- Floating wedding emojis -->
-  <div class="floating-emoji" style="top: 10%; left: 5%;">💍</div>
-  <div class="floating-emoji" style="top: 55%; left: 85%;">💒</div>
-  <div class="floating-emoji" style="top: 30%; left: 60%;">💐</div>
-  <div class="floating-emoji" style="top: 75%; left: 20%;">🎉</div>
-  <div class="floating-emoji" style="top: 25%; left: 50%;">👰</div>
-  <div class="floating-emoji" style="top: 70%; left: 35%;">🤵</div>
-  <div class="floating-emoji" style="top: 5%; left: 70%;">🌸</div>
-  <div class="floating-emoji" style="top: 40%; left: 25%;">🥂</div>
+  <!-- Floating emojis -->
+  <div class="floating-emoji">💍</div>
+  <div class="floating-emoji">💒</div>
+  <div class="floating-emoji">💐</div>
+  <div class="floating-emoji">🎉</div>
+  <div class="floating-emoji">👰</div>
+  <div class="floating-emoji">🤵</div>
+  <div class="floating-emoji">🌸</div>
+  <div class="floating-emoji">🥂</div>
 
   <h1 class="header">Kayla &amp; Dustin</h1>
 
@@ -256,31 +253,37 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Floating emoji animation logic
+    // Floating emoji random float animation
     const emojis = document.querySelectorAll('.floating-emoji');
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
     emojis.forEach((emoji) => {
-      // Initialize random horizontal direction and speed
-      let direction = Math.random() < 0.5 ? 1 : -1; // left or right
-      let speed = 0.3 + Math.random() * 0.5; // px per frame approx
-      let posX = parseFloat(emoji.style.left) || 0;
-      let posY = parseFloat(emoji.style.top) || 0;
+      // Initialize random position inside viewport
+      let posX = Math.random() * 90 + 5; // percent
+      let posY = Math.random() * 80 + 10; // percent
+      emoji.style.left = posX + '%';
+      emoji.style.top = posY + '%';
+
+      // Random velocity in px per frame (~60fps)
+      let velocityX = (Math.random() * 0.3 + 0.1) * (Math.random() < 0.5 ? 1 : -1);
+      let velocityY = (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? 1 : -1);
 
       function animate() {
-        posX += direction * speed;
-        // Slide off right side
-        if (posX > 105) {
-          posX = -10;
-          posY = Math.random() * 90 + 5;
-          emoji.style.top = posY + '%';
-        }
-        // Slide off left side
-        if (posX < -10) {
-          posX = 105;
-          posY = Math.random() * 90 + 5;
-          emoji.style.top = posY + '%';
-        }
+        posX += velocityX;
+        posY += velocityY;
+
+        // Wrap horizontally (percent)
+        if (posX > 105) posX = -10;
+        else if (posX < -10) posX = 105;
+
+        // Wrap vertically (percent)
+        if (posY > 95) posY = 5;
+        else if (posY < 5) posY = 95;
+
         emoji.style.left = posX + '%';
+        emoji.style.top = posY + '%';
+
         requestAnimationFrame(animate);
       }
       animate();
@@ -293,13 +296,11 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Basic validation
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      // Construct form data
       const formData = new FormData(form);
 
       try {
