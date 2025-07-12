@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kayla & Dustin Wedding RSVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      min-height: 100vh;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+    }
+    body {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .floating-emoji {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.25;
+      animation: float 10s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1);}
+      50% { transform: translateY(-40px) scale(1.1);}
+      100% { transform: translateY(0) scale(1);}
+    }
+    .header {
+      text-align: center;
+      margin-top: 48px;
+      margin-bottom: 12px;
+      font-size: 2.8rem;
+      font-family: 'Brush Script MT', cursive, 'Segoe Script', sans-serif;
+      color: #FFD700;
+      text-shadow: 0 2px 12px #fffbe6, 0 0 6px #bfa100;
+      letter-spacing: 2px;
+      font-weight: bold;
+      z-index: 2;
+      position: relative;
+    }
+    .desc {
+      text-align: center;
+      font-size: 1.15rem;
+      color: #444;
+      margin-bottom: 36px;
+      z-index: 2;
+      position: relative;
+    }
+    .rsvp-before {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #bfa100;
+      font-weight: bold;
+      margin-bottom: 4px;
+      z-index: 2;
+      position: relative;
+      letter-spacing: 1px;
+    }
+    .countdown-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+      z-index: 2;
+      position: relative;
+    }
+    .countdown {
+      display: flex;
+      gap: 18px;
+      font-size: 1.35rem;
+      color: #FFD700;
+      font-weight: bold;
+      background: rgba(255, 255, 224, 0.7);
+      border-radius: 10px;
+      padding: 10px 20px;
+      box-shadow: 0 2px 8px #fffbe6;
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+    .countdown span {
+      min-width: 50px;
+      text-align: center;
+      color: #bfa100;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      font-size: 1.25rem;
+    }
+    .form-container {
+      background: rgba(255,255,255,0.92);
+      max-width: 420px;
+      margin: 0 auto 48px auto;
+      padding: 32px 28px 24px 28px;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);
+      z-index: 2;
+      position: relative;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    input, textarea {
+      padding: 12px;
+      border: 1px solid #e0c97f;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fffdfa;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #FFD700;
+      outline: none;
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg, #FFD700, #ffe066);
+      color: #7a5e00;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #fffbe6;
+      transition: background 0.2s, color 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #ffe066, #FFD700);
+      color: #bfa100;
+    }
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 18px 8px 16px 8px;
+      }
+      .header {
+        font-size: 2rem;
+      }
+      .countdown {
+        font-size: 1rem;
+        gap: 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating wedding emojis in the background -->
+  <div class="floating-emoji" style="top: 12%; left: 8%; animation-delay: 0s;">💍</div>
+  <div class="floating-emoji" style="top: 55%; left: 80%; animation-delay: 3s;">💒</div>
+  <div class="floating-emoji" style="top: 33%; left: 65%; animation-delay: 1.5s;">💐</div>
+  <div class="floating-emoji" style="top: 78%; left: 18%; animation-delay: 2.5s;">🎉</div>
+  <div class="floating-emoji" style="top: 23%; left: 50%; animation-delay: 4s;">👰</div>
+  <div class="floating-emoji" style="top: 70%; left: 35%; animation-delay: 5.5s;">🤵</div>
+  <div class="floating-emoji" style="top: 5%; left: 70%; animation-delay: 6.5s;">🌸</div>
+  <div class="floating-emoji" style="top: 40%; left: 25%; animation-delay: 7.5s;">🥂</div>
+
+  <div class="header">Kayla & Dustin</div>
+  <div class="desc">
+    We’re so excited to celebrate with you! Please RSVP below to let us know if you’ll be joining Kayla and Dustin’s special day. Kindly fill out your details, and don’t forget to include your plus one if you’re bringing a guest.
+  </div>
+  <div class="rsvp-before">
+    Please RSVP before...
+  </div>
+  <div class="countdown-container">
+    <div class="countdown" id="countdown">
+      <span id="days">--</span> days
+      <span id="hours">--</span> hours
+      <span id="minutes">--</span> minutes
+      <span id="seconds">--</span> seconds
+    </div>
+    <div style="font-size:0.95rem;color:#888;margin-top:4px;">
+      (Wedding: Thursday, April 2, 2026)
+    </div>
+  </div>
+  <div class="form-container">
+    <form action="https://formsubmit.co/your@email.com" method="POST">
+      <input type="text" name="first_name" required placeholder="First Name">
+      <input type="text" name="last_name" required placeholder="Last Name">
+      <input type="text" name="address" required placeholder="Address">
+      <input type="email" name="email" required placeholder="Email">
+      <input type="tel" name="phone_number" required placeholder="Phone Number">
+      <input type="text" name="plus_one" placeholder="Plus One's Full Name (if any)">
+      <button type="submit">RSVP</button>
+    </form>
+  </div>
+  <script>
+    // Set the date for the wedding: April 2, 2026, 00:00:00
+    const weddingDate = new Date('2026-04-02T00:00:00');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = weddingDate - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = "It's the big day!";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
